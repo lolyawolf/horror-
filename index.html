@@ -1,204 +1,132 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Island Mode — Chaos Island</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Island Mode v3</title>
 <style>
-:root{--bg:#0b0e15;--card:#151b27;--card2:#10151f;--line:#2b3548;--text:#f4f6fb;--muted:#9da8bb;--red:#e25b69;--blue:#5b8cff;--gold:#e4b85b;--green:#58c89a;--purple:#9b75ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#26324b 0,#0b0e15 45%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:1050px;margin:auto;padding:14px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.title{font-size:27px;font-weight:800}.muted{color:var(--muted)}
-.card{background:linear-gradient(180deg,#171e2b,#121722);border:1px solid var(--line);border-radius:18px;padding:15px;margin:11px 0;box-shadow:0 10px 30px #0005}
-.stats{display:flex;gap:8px;flex-wrap:wrap}.pill{background:#222b3b;border:1px solid #344056;padding:6px 10px;border-radius:99px;font-size:13px}
-.controls{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:8px}
-button{border:1px solid #3a465c;background:#263044;color:white;border-radius:12px;padding:12px;font-weight:700;font-size:14px}button:active{transform:scale(.98)}.primary{background:#6541c7}.danger{background:#a4374e}.gold{background:#806321}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.team{padding:12px;border-radius:15px;background:var(--card2);border:1px solid var(--line)}.team.red{border-color:#63323c}.team.blue{border-color:#304a80}
-.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}.person{padding:8px;border-radius:10px;background:#1b2433;display:flex;justify-content:space-between;gap:5px;font-size:13px}.dead{text-decoration:line-through;opacity:.35}.shield{color:var(--gold)}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;font-weight:800}
-.log{white-space:pre-line;line-height:1.55;max-height:420px;overflow:auto}.logitem{padding:9px 0;border-bottom:1px solid #283142}.logitem:last-child{border:0}
-.columns{display:grid;grid-template-columns:1.35fr .65fr;gap:10px}
-.relations{display:grid;grid-template-columns:1fr 1fr;gap:6px}.rel{font-size:12px;background:#111722;padding:8px;border-radius:9px}.pos{color:var(--green)}.neg{color:var(--red)}
-.badge{font-size:11px;padding:3px 6px;border-radius:6px;background:#2b3548}.ally{background:#2c2550}.warning{color:#ffbd6b}
-@media(max-width:700px){.controls{grid-template-columns:1fr 1fr}.grid,.columns{grid-template-columns:1fr}.roster{grid-template-columns:1fr}}
+:root{--bg:#0b0e15;--card:#151b27;--line:#2a3447;--text:#f5f7fb;--muted:#9da8bb;--red:#d95768;--blue:#5d8ef5;--gold:#dfb65a;--purple:#7650dc;--green:#56c99b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -15%,#293653,#0b0e15 45%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:1050px;margin:auto;padding:14px}.card{background:linear-gradient(#171e2b,#121722);border:1px solid var(--line);border-radius:18px;padding:15px;margin:11px 0;box-shadow:0 10px 30px #0005}
+h1,h2,h3{margin:0 0 8px}.muted{color:var(--muted)}button,select,input{border:1px solid #3a465c;background:#242e40;color:#fff;border-radius:11px;padding:11px;font-size:14px}button{font-weight:700}button:active{transform:scale(.98)}
+.controls{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:8px}.primary{background:var(--purple)}.danger{background:#9e334a}.gold{background:#7b6126}
+.setup{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.setup .wide{grid-column:1/-1}.row{display:flex;gap:8px;flex-wrap:wrap}.stats{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;background:#222b3a;border:1px solid #344057;border-radius:99px;font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.team{background:#10151f;border:1px solid var(--line);border-radius:15px;padding:12px}.red{border-color:#63323c}.blue{border-color:#304a80}
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.person{display:flex;align-items:center;gap:8px;background:#1a2332;border-radius:10px;padding:7px;font-size:13px}.avatar{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#303b51;font-size:18px;flex:none}.dead{opacity:.35;text-decoration:line-through}.shield{color:var(--gold)}
+.columns{display:grid;grid-template-columns:1.35fr .65fr;gap:10px}.log{white-space:pre-line;line-height:1.55;max-height:460px;overflow:auto}.logitem{padding:9px 0;border-bottom:1px solid #273142}.logitem:last-child{border:0}
+.relations{display:grid;grid-template-columns:1fr 1fr;gap:6px}.rel{font-size:12px;background:#111722;padding:8px;border-radius:9px}.pos{color:var(--green)}.neg{color:var(--red)}.alliance{background:#2a2350;border:1px solid #4b3b83;padding:9px;border-radius:10px;margin:6px 0}
+.vote{display:flex;justify-content:space-between;padding:7px 9px;background:#111722;border-radius:8px;margin:5px 0}.small{font-size:12px}
+@media(max-width:700px){.controls,.setup,.grid,.columns{grid-template-columns:1fr}.roster{grid-template-columns:1fr}}
 </style>
 </head>
 <body><main>
-<div class="card top">
-  <div><div class="title">🏝️ ISLAND MODE</div><div class="muted">Chaos Island · живая симуляция</div></div>
-  <div class="stats"><span class="pill">День <b id="day">1</b></span><span class="pill">Живы <b id="aliveN">20</b></span><span class="pill">Этап: <b id="phase">Команды</b></span></div>
-</div>
+<section class="card">
+<h1>🏝️ ISLAND MODE</h1><div class="muted">Chaos Island · живая симуляция</div>
+</section>
 
-<div class="card controls">
+<section class="card" id="setup">
+<h3>🎲 Новый каст</h3>
+<div class="setup">
+<select id="count"><option>20</option><option>24</option><option>30</option><option>36</option><option>40</option><option>50</option></select>
+<select id="castMode"><option value="random">🎲 Рандомный каст</option><option value="custom">📋 Текущий каст</option></select>
+<button class="primary" onclick="newGame()">НАЧАТЬ</button>
+</div>
+<div class="muted small" style="margin-top:8px">Сейчас база содержит 20 известных персонажей. Для числа больше 20 используются повторные слоты только если база не пополнена.</div>
+</section>
+
+<section class="card">
+<div class="stats"><span class="pill">День <b id="day">1</b></span><span class="pill">Живы <b id="aliveN">20</b></span><span class="pill">Этап: <b id="phase">Команды</b></span></div>
+</section>
+
+<section class="card"><div class="controls">
 <button class="primary" onclick="nextTurn()">▶ СЛЕДУЮЩИЙ ХОД</button>
 <button onclick="challenge()">⚔ ИСПЫТАНИЕ</button>
 <button onclick="randomEvent()">🎲 СОБЫТИЕ</button>
 <button class="danger" onclick="tribalVote()">🗳 ГОЛОСОВАНИЕ</button>
-</div>
+</div></section>
 
-<div class="columns">
-<div>
-<div class="card"><div class="section-title">📜 ТЕКУЩАЯ СЦЕНА</div><div id="scene" class="log">Игра готова.</div></div>
-<div class="card"><div class="section-title">👥 СОСТАВ</div><div id="teams" class="grid"></div></div>
-<div class="card"><div class="section-title">🤝 АЛЬЯНСЫ</div><div id="alliances">Пока никто не создал альянс.</div></div>
-</div>
-<div>
-<div class="card"><div class="section-title">❤️ ОТНОШЕНИЯ</div><div id="relations" class="relations"></div></div>
-<div class="card"><div class="section-title">📖 ХРОНИКА</div><div id="history" class="log"></div></div>
-</div>
-</div>
-
-<div class="card"><button onclick="newGame()" style="width:100%">↻ НОВАЯ ИГРА</button></div>
+<div class="columns"><div>
+<section class="card"><h3>📜 Сцена</h3><div id="scene" class="log">Игра готова.</div></section>
+<section class="card"><h3>👥 Участники</h3><div id="teams" class="grid"></div></section>
+<section class="card"><h3>🤝 Альянсы</h3><div id="alliances">Пока нет альянсов.</div></section>
+</div><div>
+<section class="card"><h3>❤️ Отношения</h3><div id="relations" class="relations"></div></section>
+<section class="card"><h3>🗳 Последнее голосование</h3><div id="votes" class="muted">—</div></section>
+<section class="card"><h3>📖 Хроника</h3><div id="history" class="log"></div></section>
+</div></div>
 </main>
 <script>
-const DATA=[
-["Леви Аккерман","Attack on Titan",9,7,8,5],["Монокума","Danganronpa",7,8,9,10],["Кэт Нуар","Miraculous",7,8,7,8],
-["Венти","Genshin Impact",6,9,8,9],["Юри","DDLC",5,7,8,6],["Аяно Айши","Yandere Simulator",8,5,9,7],
-["Коннор","Detroit: Become Human",8,9,6,8],["Твайлайт Спаркл","MLP",7,9,7,7],["Шэдоу","Sonic",10,6,6,8],
-["Шугар Куки","Cookie Run",6,8,8,7],["Вилли Вонка","Charlie and the Chocolate Factory",5,9,10,6],
-["Дазай Осаму","Bungou Stray Dogs",6,10,9,10],["Санс","Undertale",5,9,10,9],["Аластор","Hazbin Hotel",8,10,10,10],
-["Джакс","Amazing Digital Circus",7,7,10,9],["Грегори","FNAF Security Breach",6,6,5,7],
-["Хацунэ Мику","Vocaloid",6,9,8,8],["Киллуа Золдик","Hunter × Hunter",9,8,7,8],
-["Рей Аянами","Evangelion",7,7,5,6],["Эдвард Элрик","Fullmetal Alchemist",9,8,7,8]
+const BASE=[
+["Леви Аккерман","AOT",9,7,8,5,"⚔️"],["Монокума","Danganronpa",7,8,9,10,"🐻"],["Кэт Нуар","Miraculous",7,8,7,8,"🐾"],
+["Венти","Genshin",6,9,8,9,"🍃"],["Юри","DDLC",5,7,8,6,"📖"],["Аяно Айши","Yandere",8,5,9,7,"🔪"],
+["Коннор","DBH",8,9,6,8,"🤖"],["Твайлайт Спаркл","MLP",7,9,7,7,"✨"],["Шэдоу","Sonic",10,6,6,8,"🖤"],
+["Шугар Куки","CRK",6,8,8,7,"🍪"],["Вилли Вонка","Wonka",5,9,10,6,"🍫"],["Дазай Осаму","BSD",6,10,9,10,"🩹"],
+["Санс","Undertale",5,9,10,9,"💀"],["Аластор","Hazbin",8,10,10,10,"📻"],["Джакс","TADC",7,7,10,9,"🃏"],
+["Грегори","FNAF",6,6,5,7,"🧢"],["Хацунэ Мику","Vocaloid",6,9,8,8,"🎤"],["Киллуа Золдик","HxH",9,8,7,8,"⚡"],
+["Рей Аянами","Evangelion",7,7,5,6,"🩵"],["Эдвард Элрик","FMA",9,8,7,8,"⚙️"]
 ];
-// power, strategy, social, chaos
-let P=[],rel={},alliances=[],history=[],day=1,phase="Команды",loser=null,immunity=null,merged=false;
-
-const pick=a=>a[Math.floor(Math.random()*a.length)];
-const shuffle=a=>[...a].sort(()=>Math.random()-.5);
-const alive=()=>P.filter(p=>p.alive);
-const team=t=>P.filter(p=>p.alive&&p.team===t);
-const key=(a,b)=>a.id<b.id?a.id+"-"+b.id:b.id+"-"+a.id;
+let P=[],rel={},alliances=[],history=[],day=1,phase="Команды",loser=null,merged=false,immunity=null,lastVotes=[];
+const pick=a=>a[Math.floor(Math.random()*a.length)], shuffle=a=>[...a].sort(()=>Math.random()-.5);
+const alive=()=>P.filter(p=>p.alive), team=t=>P.filter(p=>p.alive&&p.team===t), key=(a,b)=>a.id<b.id?a.id+"-"+b.id:b.id+"-"+a.id;
+const getRel=(a,b)=>rel[key(a,b)]||0;
 function addRel(a,b,d){if(a===b)return;let k=key(a,b);rel[k]=Math.max(-100,Math.min(100,(rel[k]||0)+d))}
-function getRel(a,b){return rel[key(a,b)]||0}
-function pair(a,b){return Math.random()<.5?[a,b]:[b,a]}
-function log(text){
- history.unshift({day,text}); document.getElementById("scene").textContent=text;
- document.getElementById("history").innerHTML=history.slice(0,12).map(x=>`<div class="logitem"><b>День ${x.day}</b><br>${x.text}</div>`).join("");
- render();
-}
+function say(text){document.getElementById("scene").textContent=text;history.unshift({d:day,t:text});document.getElementById("history").innerHTML=history.slice(0,15).map(x=>`<div class="logitem"><b>День ${x.d}</b><br>${x.t}</div>`).join("");render()}
 function newGame(){
- let s=shuffle(DATA);
- P=s.map((x,i)=>({id:i,name:x[0],fandom:x[1],power:x[2],strategy:x[3],social:x[4],chaos:x[5],team:i<10?"A":"B",alive:true,immunity:0}));
- rel={};alliances=[];history=[];day=1;phase="Команды";loser=null;immunity=null;merged=false;
- // Seed a few mild affinities so social play is not empty, but keep them mostly neutral.
- for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++)if(Math.random()<.08)rel[key(P[i],P[j])]=Math.floor(Math.random()*31)-15;
- log("🏝️ ДЕНЬ 1\n20 участников прибыли на остров. Команды сформированы случайно.\n\nСкрытые характеристики уже определены: сила, стратегия, социальность и хаос.\n\nТеперь события будут реально менять игру.");
+ let n=+document.getElementById("count").value, mode=document.getElementById("castMode").value;
+ let src=mode==="custom"?BASE:shuffle(BASE);
+ if(n>src.length)src=Array.from({length:n},(_,i)=>BASE[i%BASE.length]);
+ else src=src.slice(0,n);
+ P=shuffle(src).map((x,i)=>({id:i,name:x[0],fandom:x[1],power:x[2],strategy:x[3],social:x[4],chaos:x[5],icon:x[6],team:i<Math.ceil(n/2)?"A":"B",alive:true,immunity:false}));
+ rel={};alliances=[];history=[];day=1;phase="Команды";loser=null;merged=false;immunity=null;lastVotes=[];
+ for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++)if(Math.random()<.07)rel[key(P[i],P[j])]=Math.floor(Math.random()*31)-15;
+ say(`🏝️ ДЕНЬ 1\n\n${n} участников на острове.\nКоманды сформированы.`);
 }
 function render(){
- document.getElementById("day").textContent=day;
- document.getElementById("aliveN").textContent=alive().length;
- document.getElementById("phase").textContent=phase;
- const make=t=>P.filter(p=>p.team===t).map(p=>`<div class="person ${p.alive?'':'dead'}"><span>${p.name}</span><span>${p.immunity?'🛡️':''}</span></div>`).join("");
- let a=merged?'<div class="team"><b>🌴 Объединение</b><div class="roster">'+make("M")+"</div></div>":`<div class="team red"><b>🔥 Команда A</b><div class="roster">${make("A")}</div></div><div class="team blue"><b>🌊 Команда B</b><div class="roster">${make("B")}</div></div>`;
- document.getElementById("teams").innerHTML=merged?a:`${a}`;
- let rs=[]; for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++)if(P[i].alive&&P[j].alive&&Math.abs(getRel(P[i],P[j]))>=25)rs.push([P[i],P[j],getRel(P[i],P[j])]);
- rs=rs.sort((a,b)=>Math.abs(b[2])-Math.abs(a[2])).slice(0,12);
- document.getElementById("relations").innerHTML=rs.length?rs.map(x=>`<div class="rel">${x[0].name} ↔ ${x[1].name}<br><span class="${x[2]>=0?'pos':'neg'}">${x[2]>=0?'+':''}${x[2]}</span></div>`).join(""):"<span class='muted'>Отношения пока нейтральные.</span>";
- document.getElementById("alliances").innerHTML=alliances.length?alliances.map(a=>`<div class="rel ally"><b>${a.name}</b><br>${a.members.filter(x=>x.alive).map(x=>x.name).join(", ")}${a.broken?"<br><span class='warning'>РАСПАЛСЯ</span>":""}</div>`).join(""):"<span class='muted'>Пока нет устойчивых альянсов.</span>";
+ document.getElementById("day").textContent=day;document.getElementById("aliveN").textContent=alive().length;document.getElementById("phase").textContent=phase;
+ const make=t=>P.filter(p=>p.team===t).map(p=>`<div class="person ${p.alive?'':'dead'}"><span class="avatar">${p.icon}</span><span>${p.name}<br><span class="muted small">${p.fandom}</span></span><span>${p.immunity?'🛡️':''}</span></div>`).join("");
+ document.getElementById("teams").innerHTML=merged?`<div class="team"><b>🌴 Объединение</b><div class="roster">${make("M")}</div></div>`:`<div class="team red"><b>🔥 Команда A</b><div class="roster">${make("A")}</div></div><div class="team blue"><b>🌊 Команда B</b><div class="roster">${make("B")}</div></div>`;
+ let rs=[];for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++)if(P[i].alive&&P[j].alive&&Math.abs(getRel(P[i],P[j]))>=25)rs.push([P[i],P[j],getRel(P[i],P[j])]);
+ rs.sort((a,b)=>Math.abs(b[2])-Math.abs(a[2]));document.getElementById("relations").innerHTML=rs.slice(0,14).map(x=>`<div class="rel">${x[0].name} ↔ ${x[1].name}<br><span class="${x[2]>=0?'pos':'neg'}">${x[2]>=0?'+':''}${x[2]}</span></div>`).join("")||"<span class='muted'>Пока всё спокойно.</span>";
+ document.getElementById("alliances").innerHTML=alliances.filter(a=>!a.broken).map(a=>`<div class="alliance"><b>${a.name}</b><br>${a.members.filter(x=>x.alive).map(x=>x.name).join(", ")}</div>`).join("")||"<span class='muted'>Пока нет альянсов.</span>";
+ document.getElementById("votes").innerHTML=lastVotes.length?lastVotes.map(v=>`<div class="vote"><span>${v.from}</span><b>→ ${v.to}</b></div>`).join(""):"—";
 }
 function challenge(){
- if(alive().length<=10&&!merged){merge();return}
  if(merged){individualChallenge();return}
- const A=team("A"),B=team("B");
- let scoreA=A.reduce((s,p)=>s+p.power*1.2+p.strategy*.5+p.social*.2,0);
- let scoreB=B.reduce((s,p)=>s+p.power*1.2+p.strategy*.5+p.social*.2,0);
- scoreA*=.85+Math.random()*.3;scoreB*=.85+Math.random()*.3;
- let win=scoreA>=scoreB?"A":"B";loser=win==="A"?"B":"A";phase="Голосование";
- A.forEach(p=>p.immunity=0);B.forEach(p=>p.immunity=0);
- log(`⚔️ КОМАНДНОЕ ИСПЫТАНИЕ\n\n🔥 Команда ${win} побеждает!\n🏕️ Команда ${loser} проигрывает и должна голосовать.\n\nСоставы и скрытые характеристики повлияли на результат.\n\nТеперь можно провести 💬 событие или сразу 🗳 голосование.`);
+ let A=team("A"),B=team("B");if(!A.length||!B.length)return merge();
+ let score=t=>t.reduce((s,p)=>s+p.power*1.2+p.strategy*.5+p.social*.2,0)*(0.85+Math.random()*.3);
+ let win=score(A)>=score(B)?"A":"B";loser=win==="A"?"B":"A";phase="Голосование";A.concat(B).forEach(p=>p.immunity=false);
+ say(`⚔️ ИСПЫТАНИЕ\n\n🏆 Команда ${win} победила.\n💢 Команда ${loser} идёт на голосование.`);
 }
-function merge(){
- merged=true;P.filter(p=>p.alive).forEach(p=>p.team="M");phase="Индивидуальный этап";loser=null;
- log(`🌴 СЛИЯНИЕ!\n\nОсталось ${alive().length} участников. Команды распущены.\n\nТеперь социальные связи, альянсы и иммунитеты становятся важнее.`);
-}
-function individualChallenge(){
- let A=alive(); if(A.length<=2){finale();return}
- let scores=A.map(p=>({p,s:p.power+p.strategy*1.2+p.social*.35+Math.random()*8})).sort((a,b)=>b.s-a.s);
- let w=scores[0].p; immunity=w;w.immunity=1;phase="Голосование";
- log(`⚔️ ИНДИВИДУАЛЬНОЕ ИСПЫТАНИЕ\n\n🏆 ${w.name} выигрывает иммунитет!\n\nЕго/её нельзя исключить в этом голосовании.`);
-}
+function merge(){merged=true;P.filter(p=>p.alive).forEach(p=>p.team="M");phase="Индивидуальный этап";loser=null;say(`🌴 СЛИЯНИЕ\n\nОсталось ${alive().length} участников.\nТеперь каждый играет за себя.`)}
+function individualChallenge(){if(alive().length<=2){finale();return}let s=alive().map(p=>({p,s:p.power+p.strategy*1.2+p.social*.4+Math.random()*8})).sort((a,b)=>b.s-a.s)[0].p;s.immunity=true;phase="Голосование";say(`⚔️ ИНДИВИДУАЛЬНОЕ ИСПЫТАНИЕ\n\n🏆 ${s.name} получает иммунитет.`)}
+function createAlliance(members){let a=alliances.find(a=>!a.broken&&members.some(x=>a.members.includes(x)));if(a){members.forEach(x=>{if(!a.members.includes(x))a.members.push(x)});return}alliances.push({name:pick(["Теневой союз","Ночные птицы","Последний шанс","Секретный альянс"]),members:[...members],broken:false})}
 function randomEvent(){
- const A=alive();if(A.length<2)return;
- const type=Math.floor(Math.random()*7); const x=pick(A); const y=pick(A.filter(p=>p!==x));
- if(type===0){
-   addRel(x,y,22); if(Math.random()<.45)createAlliance([x,y]);
-   log(`🤝 СОЮЗ\n${x.name} и ${y.name} помогают друг другу и сближаются.\n\nОтношения: ${x.name} ↔ ${y.name} +22\nТеперь они с большей вероятностью будут голосовать вместе.`);
- }else if(type===1){
-   addRel(x,y,-30); breakAlliancePair(x,y);
-   log(`💢 КОНФЛИКТ\n${x.name} и ${y.name} крупно поссорились.\n\nОтношения: -30\nЕсли они окажутся на одном голосовании, вероятность взаимного голоса резко возрастает.`);
- }else if(type===2){
-   x.immunity=1;log(`🎁 ТАЙНИК ОСТРОВА\n${x.name} нашёл идола иммунитета!\n\n🛡️ Иммунитет сохранён до следующего голосования.`);
- }else if(type===3){
-   addRel(x,y,35);log(`🫶 НЕОЖИДАННАЯ ДРУЖБА\n${x.name} и ${y.name} провели время вместе.\n\nОтношения: +35\nИх голоса теперь сильнее тяготеют друг к другу.`);
- }else if(type===4){
-   addRel(x,y,-45);log(`🐍 ПРЕДАТЕЛЬСТВО\n${x.name} раскрыл информацию о ${y.name} другим участникам.\n\nОтношения: -45\n${y.name} теперь будет искать способ ответить.`);
- }else if(type===5){
-   x.power=Math.min(10,x.power+1);log(`🍽️ НАГРАДА\n${x.name} получил лучший рацион и восстановился.\n\nСила +1 → ${x.power}\nЭто немного повышает шансы в следующем испытании.`);
- }else{
-   const z=pick(A);z.strategy=Math.min(10,z.strategy+1);
-   log(`🕵️ НАБЛЮДАТЕЛЬНОСТЬ\n${z.name} заметил важную деталь чужой стратегии.\n\nСтратегия +1 → ${z.strategy}\nЭто усилит влияние на будущих голосованиях.`);
- }
- phase=merged?"Индивидуальный этап":phase;
+ let A=alive();if(A.length<2)return;let x=pick(A),y=pick(A.filter(p=>p!==x)),r=Math.floor(Math.random()*7);
+ if(r===0){addRel(x,y,25);if(Math.random()<.55)createAlliance([x,y]);say(`🤝 ${x.name} и ${y.name} заключили союз.`)}
+ else if(r===1){addRel(x,y,-32);alliances.forEach(a=>{if(a.members.includes(x)&&a.members.includes(y)&&Math.random()<.8)a.broken=true});say(`💢 ${x.name} и ${y.name} поссорились.`)}
+ else if(r===2){x.immunity=true;say(`🎁 ${x.name} нашёл идол иммунитета.`)}
+ else if(r===3){addRel(x,y,35);say(`🫶 ${x.name} и ${y.name} стали ближе.`)}
+ else if(r===4){addRel(x,y,-45);say(`🐍 ${x.name} предал ${y.name}.`)}
+ else if(r===5){x.power=Math.min(10,x.power+1);say(`💪 ${x.name} стал сильнее.`)}
+ else{x.strategy=Math.min(10,x.strategy+1);say(`🧠 ${x.name} узнал чужой секрет.`)}
 }
-function createAlliance(ms){
- if(ms.length<2)return;
- let existing=alliances.find(a=>ms.some(x=>a.members.includes(x))&& !a.broken);
- if(existing){ms.forEach(x=>{if(!existing.members.includes(x))existing.members.push(x)});return}
- alliances.push({name:["Теневой союз","Последний шанс","Ночной альянс","Трибуна"][Math.floor(Math.random()*4)],members:[...ms],broken:false});
-}
-function breakAlliancePair(a,b){alliances.forEach(al=>{if(al.members.includes(a)&&al.members.includes(b)&&Math.random()<.7)al.broken=true})}
 function tribalVote(){
- if(phase!=="Голосование"){log("🗳️ Сейчас голосование не открыто. Сначала проведи испытание.");return}
- let pool=merged?alive():team(loser); if(pool.length<=1){merge();return}
- let eligible=pool.filter(p=>!p.immunity);
- if(!eligible.length){eligible=pool;p.immunity=0}
- let votes=new Map(eligible.map(p=>[p,0]));
- // Every voter chooses a target using relationships, alliance loyalty, strategy and a little randomness.
- for(const voter of pool){
-   if(voter.immunity)continue;
-   let candidates=eligible.filter(t=>t!==voter);
-   if(!candidates.length)continue;
-   let scored=candidates.map(t=>{
-     let s=0;
-     s+=Math.max(0,-getRel(voter,t))*0.75;
-     s+=t.chaos*0.7;
-     s+=(10-t.social)*0.35;
-     s+=Math.random()*12;
-     const allies=alliances.filter(a=>!a.broken&&a.members.includes(voter)&&a.members.includes(t));
-     if(allies.length)s-=22;
-     return {t,s};
-   }).sort((a,b)=>b.s-a.s);
-   votes.set(scored[0].t,votes.get(scored[0].t)+1);
+ if(phase!=="Голосование"){say("🗳️ Сначала нужно провести испытание.");return}
+ let pool=merged?alive():team(loser);if(pool.length<=1){merge();return}
+ let eligible=pool.filter(p=>!p.immunity);if(!eligible.length){pool.forEach(p=>p.immunity=false);eligible=pool}
+ let votes=new Map(eligible.map(p=>[p,0]));lastVotes=[];
+ for(const voter of pool){if(voter.immunity)continue;let cs=eligible.filter(t=>t!==voter);if(!cs.length)continue;
+  let target=cs.map(t=>{let s=Math.max(0,-getRel(voter,t))*.8+t.chaos*.65+(10-t.social)*.35+Math.random()*12;
+   let allied=alliances.some(a=>!a.broken&&a.members.includes(voter)&&a.members.includes(t));if(allied)s-=25;return [t,s]}).sort((a,b)=>b[1]-a[1])[0][0];
+  votes.set(target,votes.get(target)+1);lastVotes.push({from:voter.name,to:target.name});
  }
- let sorted=[...votes.entries()].sort((a,b)=>b[1]-a[1]);
- let target=sorted[0][0],n=sorted[0][1];
- target.alive=false;target.immunity=0;
- // Voting consequences affect surviving relationships.
- for(const [v,c] of votes)if(c>0&&v!==target)addRel(v,target,-8);
+ let sorted=[...votes.entries()].sort((a,b)=>b[1]-a[1]);let target=sorted[0][0],num=sorted[0][1];target.alive=false;target.immunity=false;
+ for(const [v,c] of votes)if(c)addRel(v,target,-6);
  alliances.forEach(a=>{if(a.members.includes(target)&&a.members.filter(x=>x.alive).length<2)a.broken=true});
- log(`🗳️ ГОЛОСОВАНИЕ\n\n${target.name} получает ${n} голос(а/ов) и выбывает.\n\n💀 ${target.name} покидает остров.\n\nРезультат сформирован из отношений, альянсов, характеристик и случайности — поэтому события реально меняют дальнейшую игру.`);
- day++;
- immunity=null;pool.forEach(p=>p.immunity=0);
- if(alive().length<=2){finale();return}
- if(!merged&&alive().length<=10){merge();return}
- phase=merged?"Индивидуальный этап":"Командный этап";
+ say(`🗳️ ГОЛОСОВАНИЕ\n\n${target.name} — ${num} голосов.\n\n💀 ${target.name} выбывает.`);
+ day++;P.forEach(p=>p.immunity=false);if(alive().length<=2){finale();return}if(!merged&&alive().length<=Math.max(4,Math.ceil(P.length/2))){merge();return}phase=merged?"Индивидуальный этап":"Командный этап";
 }
-function finale(){
- let a=alive();phase="Финал";
- if(a.length===2){
-   // Social + strategy determine final vote, with random noise.
-   let score=a.map(p=>({p,s:p.social*1.4+p.strategy*1.2+p.power*.5+Math.random()*10})).sort((x,y)=>y.s-x.s);
-   let w=score[0].p,l=score[1].p;
-   log(`🏆 ФИНАЛ\n\nФиналисты: ${w.name} и ${l.name}\n\n👑 ПОБЕДИТЕЛЬ: ${w.name}\n🥈 Второе место: ${l.name}\n\nФинальный результат учитывает социальность, стратегию, силу и накопленные последствия игры.`);
- }else log("🏆 ФИНАЛ\n\nИгра завершена.");
-}
-function nextTurn(){
- if(phase==="Команды"||phase==="Командный этап"){challenge();return}
- if(phase==="Голосование"){tribalVote();return}
- if(phase==="Индивидуальный этап"){individualChallenge();return}
- if(phase==="Финал"){newGame();return}
- randomEvent();
-}
+function finale(){let a=alive();phase="Финал";if(a.length===2){let w=a.sort((x,y)=>(y.social*1.4+y.strategy*1.2+Math.random()*8)-(x.social*1.4+x.strategy*1.2+Math.random()*8))[0];say(`🏆 ФИНАЛ\n\n👑 ${w.name} побеждает!`)}else say("🏆 ФИНАЛ\n\nИгра завершена.")}
+function nextTurn(){if(phase==="Команды"||phase==="Командный этап"){challenge();return}if(phase==="Голосование"){tribalVote();return}if(phase==="Индивидуальный этап"){individualChallenge();return}if(phase==="Финал"){newGame();return}randomEvent()}
 newGame();
 </script>
 </body></html>
